@@ -3,31 +3,21 @@
 # курсового проекта
 # с данными датчика температуры
 # *********************************
-# *******реализация под Linux*******
 
-CC = gcc
+all: temp_stats
 
-temp_prog.o: main.o temp_api.o
-	$(CC) -o temp_prog.o main.o temp_api.o
-	
-# *******реализация под Windows*******
-#
-#temp_prog.exe: main.o temp_api.o
-#	$(CC) -o temp_prog.exe main.o temp_api.o
+temp_stats: main.o temp_functions.o
+	gcc -o temp_stats.exe main.o temp_functions.o
 
+main.o: main.c temp_functions.h
+	gcc -c main.c
 
-main.o: main.c temp_api.h
-	$(CC) -O0 -g3 -Wall -c main.c
+temp_functions.o: temp_functions.c temp_functions.h
+	gcc -c temp_functions.c
 
-temp_api.o: temp_api.c temp_api.h
-	$(CC) -O0 -g3 -Wall -c temp_api.c
-
-# ************************************
-# **********очистка проекта*********
-# Linux
 clean:
-	rm -rf *.s *.o
-	
+	rm -rf *.s *.o *.exe
+
 # Windows
 clean_win:
 	del -rf *.s *.o *.exe
